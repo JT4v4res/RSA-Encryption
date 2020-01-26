@@ -235,6 +235,6 @@ And again, as we are dealing with very large numbers, we use the fast modular ex
 ![](https://media.giphy.com/media/tIeCLkB8geYtW/giphy.gif)
 <br>
 
-Isso é tudo, pessoal!<br>
+That's all folks!<br>
 
 If you want to see the program up and running, you can access the program's repository link [Here](https://github.com/JT4v4res/RSA-Encryption). :)
