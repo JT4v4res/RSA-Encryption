@@ -118,7 +118,7 @@ def encrypt(text, E, n):
             index = fast_exponenciation(bin_list, n, 1, aux % n, 1)#Conversion and concating in string
             encrypted = encrypted + str(index)
             if i + 1 != lenght:
-                encrypted += ","
+                encrypted += " "
         i += 1
     return encrypted
 
@@ -168,7 +168,7 @@ def decrypt(Encrypted, n, d):
     #print("AUGUSTINHO CARRARA")
     while i < lenght:
         aux = ""
-        while i < lenght and Encrypted[i] != ',':#Verifying if the next position of message is a ','
+        while i < lenght and Encrypted[i] != ' ':#Verifying if the next position of message is a ','
             aux += Encrypted[i]
             i += 1
         i += 1
@@ -252,14 +252,22 @@ def main():
                 archive.writelines(str(Encrypted))
                 archive.close()
         elif option == 3:
+            Encrypted = ""
             print("Type P and Q again(P first then Q)")
             p = int(input())
             q = int(input())
+            try:
+                archive = open('Encrypted Message.txt', 'r+')
+                for nb in archive:
+                    Encrypted = Encrypted + nb
+                archive.close()
+            except FileNotFoundError:
+                raise Exception('The file with encrypted message not exists')
             print("Type E")
             e = int(input())
             n = p * q
-            print("Type the encrypted Message")
-            Encrypted = input()
+            '''print("Type the encrypted Message")
+            Encrypted = input()'''
             totient = phi_function(p, q)
             #print("oi sumido")
             d = inverse(e, totient)
