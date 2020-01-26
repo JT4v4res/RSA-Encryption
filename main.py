@@ -91,20 +91,6 @@ def mk_primes():
             return prime
 
 '''
-Function to calculate the fast modular exponentiation
-'''
-def fast_modular_exponentiation(aux, E, n):
-    r = 1
-    if 1 and E:
-        r = aux
-    while E:
-        E >>= 1
-        aux = (aux * aux) % n
-        if E and 1:
-            r = (r * aux) % n
-    return r
-
-'''
 This function receives the text do encrypt
 the E and n numbers
 and encrypt the text
@@ -112,13 +98,27 @@ and encrypt the text
 def encrypt(text, E, n):
     lenght = len(text)
     text = text.lower()#Converting message to lower case, so we don't need other 2 dictionaries
+    binary = bin(E).replace("0b", "")
+    binn = list(binary)
+    binn.reverse()
+    bin_list = []
+    i = 0
+    for c in binn:
+        if c == "1":
+            bin_list.append(pow(2, i))
+            i += 1
+        elif c == "0":
+            i += 1
     i = 0
     encrypted = ""
     while i < lenght:
-        letter = text[i]#Only one letter at time
-        encrypted = encrypted + str(fast_modular_exponentiation(catalougue[letter],E,n))#Conversion and concating in string
-        if i + 1 != lenght:
-            encrypted += ","
+        if not text.isdigit():
+            letter = text[i]  # Only one letter at time
+            aux = catalougue[letter]
+            index = fast_exponenciation(bin_list, n, 1, aux % n, 1)#Conversion and concating in string
+            encrypted = encrypted + str(index)
+            if i + 1 != lenght:
+                encrypted += ","
         i += 1
     return encrypted
 
@@ -152,10 +152,12 @@ n key and d key, and decrypt the message
 def decrypt(Encrypted, n, d):
     lenght = len(Encrypted)
     decrypted = ""
-    binary = con_bin(d)
+    binary = bin(d).replace("0b","")
+    binn = list(binary)
+    binn.reverse()
     bin_list = []
     i = 0
-    for c in binary:
+    for c in binn:
         if c == "1":
             bin_list.append(pow(2, i))
             i += 1
@@ -177,29 +179,24 @@ def decrypt(Encrypted, n, d):
     return decrypted
 
 '''
+Extended version of euclidean algorithm to calculate the modular inverse
+'''
+def Extended_Euclidean_Algorithm(a, b):
+    if a == 0:
+        return b, 0, 1
+    else:
+        g, y, x = Extended_Euclidean_Algorithm(b % a, a)
+        return g, x - (b // a) * y, y
+
+'''
 Function that calculates the inverse, to decrypt the message
 '''
 def inverse(a, m):
-    m0 = m
-    y = 0
-    x = 1
-    if (m == 1):
-        return 0
-    while (a > 1):
-        # q is quotient
-        q = a // m
-        t = m
-        # m is remainder now, process same as Euclid's algorithm
-        m = a % m
-        a = t
-        t = y
-        # Update x and y
-        y = x - q * y
-        x = t
-        # Make x positive
-    if x < 0:
-        x = x + m0
-    return x
+    g, x, y = Extended_Euclidean_Algorithm(a, m)
+    if g != 1:
+        raise Exception('modular inverse does not exist')
+    else:
+        return x % m
 
 def main():
     while True:
@@ -225,7 +222,7 @@ def main():
             while True:
                 print("Insert a value E / mcd(E, Phi) = 1")
                 e = int(input())#User have to insert an E number that are coprime to Totient
-                if are_coprimes(e, totient, 1, 1, 1):#E have to be coprime to the totient
+                if are_coprimes(totient, e, 1, 1, 1) and e < totient:#E have to be coprime to the totient
                     break
             p_key = n, e
             try:#Public Key writed on an archive
@@ -266,6 +263,7 @@ def main():
             totient = phi_function(p, q)
             #print("oi sumido")
             d = inverse(e, totient)
+            print(d)
             #print("bye")
             start = time.time()
             text = decrypt(Encrypted, n, d)
