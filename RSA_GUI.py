@@ -432,42 +432,48 @@ def input_Decrypt():#GUI page for Decrypt Message option
     xbut.place(x = 150, y = 350)
 
 
+def main():
 
-#first page of GUI------------------------------------------
+    #first page of GUI------------------------------------------
 
-janela.title("RSA Enigma Encrypter")
+    janela.title("RSA Enigma Encrypter")
 
-janela.geometry("500x500+200+200")
-janela.resizable(0,0)
-#janela.iconbitmap("icon.ico")
-janela['bg'] = "black"
+    janela.geometry("500x500+200+200")
+    janela.resizable(0,0)
+    #janela.iconbitmap("icon.ico")
+    janela['bg'] = "black"
 
-#labels
-l = Label(janela,text = "Welcome to the RSA enigma encrypter!", bg = "black")
-l.config(font=("Courier", 15), fg = "white")
-l.place(x = 50, y = 100)
-#----
-l2 = Label(janela,text = "Please, select the action", bg = "black")
-l2.config(font=("Courier", 11), fg = "white")
-l2.place(x = 140, y = 130)
-#----
+    #labels
+    global l
+    l = Label(janela,text = "Welcome to the RSA enigma encrypter!", bg = "black")
+    l.config(font=("Courier", 15), fg = "white")
+    l.place(x = 50, y = 100)
+    #----
+    global l2
+    l2 = Label(janela,text = "Please, select the action", bg = "black")
+    l2.config(font=("Courier", 11), fg = "white")
+    l2.place(x = 140, y = 130)
+    #----
 
-#botoes
+    #botoes
+    global btn
+    btn = Button(janela,text = "Generate public key", bg = "white", command = input_PK)
+    btn.config(height = 1, width = 18, font = ("Courier",10))
+    btn.place(x = 170, y = 200)
 
-btn = Button(janela,text = "Generate public key", bg = "white", command = input_PK)
-btn.config(height = 1, width = 18, font = ("Courier",10))
-btn.place(x = 170, y = 200)
+    global btn2
+    btn2 = Button(janela,text = "Encrypt message", bg = "white", command = input_Encrypt)
+    btn2.config(height = 1, width = 18, font = ("Courier",10),)
+    btn2.place(x = 170, y = 250)
 
-
-btn2 = Button(janela,text = "Encrypt message", bg = "white", command = input_Encrypt)
-btn2.config(height = 1, width = 18, font = ("Courier",10),)
-btn2.place(x = 170, y = 250)
-
-
-btn3 = Button(janela,text = "Decrypt message", bg = "white", command = input_Decrypt)
-btn3.config(height = 1, width = 18, font = ("Courier",10))
-btn3.place(x = 170, y = 300)
+    global btn3
+    btn3 = Button(janela,text = "Decrypt message", bg = "white", command = input_Decrypt)
+    btn3.config(height = 1, width = 18, font = ("Courier",10))
+    btn3.place(x = 170, y = 300)
 
 
 
-janela.mainloop()
+    janela.mainloop()
+
+
+main()
