@@ -164,7 +164,7 @@ def decrypt(Encrypted, n, d):
         elif c == "0":
             i += 1
     i = 0
-    print(bin_list)
+    #print(bin_list)
     #print("AUGUSTINHO CARRARA")
     while i < lenght:
         aux = ""
@@ -271,12 +271,12 @@ def main():
             totient = phi_function(p, q)
             #print("oi sumido")
             d = inverse(e, totient)
-            print(d)
+            #print(d)
             #print("bye")
             start = time.time()
             text = decrypt(Encrypted, n, d)
             end = time.time()
-            print(end - start)
+            #print(end - start)
             try:
                 archive = open('Decrypted Message.txt', 'r+')
                 archive.writelines(text)
